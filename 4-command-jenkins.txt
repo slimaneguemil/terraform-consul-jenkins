@@ -1,0 +1,47 @@
+# Windows
+$env:CONSUL_HTTP_TOKEN="SECRETID_VALUE"
+
+# Create two tokens (networking and applications) for jenkins
+consul acl token create -policy-name=networking -description="Jenkins networking"
+consul acl token create -policy-name=applications -description="Jenkins applications"
+
+# Make note of SecretID for later
+
+# Create a Jenkins container
+cd jenkins
+docker-compose up
+
+#Copy the admin password
+http://127.0.0.1:8080
+
+# Install suggested plugins
+# Create a user
+# Manage jenkins
+# Manage plugins
+# Search for Terraform in Available and install without restart
+# Back to Manage jenkins
+# Global Tool Configuration
+# Add Terraform
+# Name: terraform
+# Install automatically
+# Version - latest for linux (amd64)
+# Click Save
+
+# Create a new item
+# Name: net-deploy
+# Type pipeline
+# Select poll SCM
+# Definition: Pipeline script from SCM
+# SCM: Git
+# Repo URL: YOUR_REPO_URL or https://github.com/ned1313/Deep-Dive-Terraform.git
+# Script path: m8/networking/Jenkinsfile
+# Uncheck lightweight checkout
+
+# Go to credentials -> global
+# Create a credential of type secret text with ID networking_consul_token and the consul token as the secret
+# Create a credential of type secret text with ID applications_consul_token and the consul token as the secret
+# Create a credential of type secret text with ID aws_access_key and the access key as the secret
+# Create a credential of type secret text with ID aws_secret_access_key and the access secret as the secret
+
+#run pipeline
+# in last stage you have to manually approve or else decline=destroy terraform

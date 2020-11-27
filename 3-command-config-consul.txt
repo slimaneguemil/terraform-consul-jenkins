@@ -1,0 +1,23 @@
+## We are going to add more config data to our Consul installation
+    cd ./3-consul-config/consul
+
+    # NETWORKING : Let's set the Consul token to Mary Moe
+    # Replace SECRETID_VALUE with Mary Moe's secret ID
+        $env:CONSUL_HTTP_TOKEN="SECRETID_VALUE"
+
+    # Write the configuration data for additional workspaces config
+        consul kv put networking/configuration/globo-primary/development/net_info @dev-net.json
+        consul kv put networking/configuration/globo-primary/qa/net_info @qa-net.json
+        consul kv put networking/configuration/globo-primary/production/net_info @prod-net.json
+        consul kv put networking/configuration/globo-primary/common_tags @app-tags.json
+
+
+    ## APPLICATION : Now let's change to us Sally Sue's token for Consul
+    ## You can go into the ACL section of the Consul UI and grab it
+        $env:CONSUL_HTTP_TOKEN="SECRETID_VALUE"
+
+    # Write the configuration data for additional workspaces config
+        consul kv put applications/configuration/globo-primary/development/app_info @dev-app.json
+        consul kv put applications/configuration/globo-primary/qa/app_info @qa-app.json
+        consul kv put applications/configuration/globo-primary/production/app_info @prod-app.json
+        consul kv put applications/configuration/globo-primary/common_tags @app-tags.json

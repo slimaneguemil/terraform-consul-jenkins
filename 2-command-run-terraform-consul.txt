@@ -1,0 +1,18 @@
+#
+#    run terraform files to setup consul policies, token for 2 users Mary and Sally
+#
+
+cd ./2-terraform-consul
+
+# export root token
+     $env:CONSUL_HTTP_TOKEN="SECRETID_VALUE"
+
+# Set up paths, policies, and tokens
+    terraform init -backend-config="path=globo-primary"
+    terraform plan -out consul.tfplan
+    terraform apply consul.tfplan
+
+# Get token values for Mary and Sally and record them for later
+    consul acl token read -id ACCESSOR_ID_MARY
+    consul acl token read -id ACCESSOR_ID_SALLY
+

@@ -1,0 +1,27 @@
+    # install consul on minikube  https://learn.hashicorp.com/tutorials/consul/kubernetes-minikube?utm_source=consul.io&utm_medium=docs
+    ## Now it's time to deploy our local Consul server node
+    ## Download the consul executable from https://www.consul.io/downloads
+
+        cd ./consul-server/
+
+    #launch consul server
+        option : kubectl create secret generic bootstrap-token --from-literal='token=123456'
+        # Launch consul server instance
+        consul agent -bootstrap -config-file="config/consul-config.hcl" -bind="127.0.0.1"
+        option with helm : helm install -f helm-consul-values.yaml hashicorp hashicorp/consul
+
+    # Generate the bootstrap token
+        # Open a separate terminal window to run the rest of the commands
+
+        # Generate the bootstrap token
+            consul acl bootstrap
+
+        # Set CONSUL_TOKEN to SecretID
+
+            # Linux and MacOS
+            export CONSUL_HTTP_TOKEN=SECRETID_VALUE
+
+            # Windows
+            $env:CONSUL_HTTP_TOKEN="SECRETID_VALUE"
+
+
